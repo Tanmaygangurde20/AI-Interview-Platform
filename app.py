@@ -18,65 +18,62 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* Modern Color Palette - Teal/Emerald Theme */
-    :root {
-        --primary: #0d9488;
-        --secondary: #14b8a6;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-        --dark: #0f172a;
-        --light: #f1f5f9;
+    /* Force override Streamlit Cloud defaults */
+    .stApp {
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
     }
     
-    /* ROOT APP BACKGROUND (FIXED FOR STREAMLIT CLOUD) */
-    [data-testid="stAppViewContainer"] {
-        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-    }
-
-    /* Main Container */
-    [data-testid="stAppViewContainer"] .main {
-        background: transparent;
-        padding: 1.5rem;
+    /* Main container - force background */
+    .main .block-container {
+        background: transparent !important;
+        padding: 1.5rem !important;
+        max-width: 100% !important;
     }
     
-    /* Card Styles - Reduced margins */
-    .card {
-        background: white;
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        margin: 0.5rem 0;
-        animation: slideUp 0.5s ease-out;
+    /* Card Styles - Custom class for content boxes */
+    div[data-testid="stVerticalBlock"] > div {
+        background: white !important;
+        border-radius: 20px !important;
+        padding: 2rem !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+        margin: 0.5rem 0 !important;
     }
     
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* Sidebar - Force dark theme */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0f172a 0%, #020617 100%) !important;
     }
     
-    /* Question Card */
-    .question-card {
-        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-        color: white;
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 1rem 0;
-        box-shadow: 0 15px 40px rgba(13, 148, 136, 0.5);
+    section[data-testid="stSidebar"] > div {
+        background: transparent !important;
     }
     
-    /* Progress Bar */
-    .stProgress > div > div > div {
-        background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%);
+    /* Sidebar text - Force white */
+    section[data-testid="stSidebar"] * {
+        color: white !important;
     }
     
-    /* Buttons - Darker teal for better visibility */
+    section[data-testid="stSidebar"] .stMarkdown,
+    section[data-testid="stSidebar"] .stMarkdown p,
+    section[data-testid="stSidebar"] .stMarkdown h1,
+    section[data-testid="stSidebar"] .stMarkdown h2,
+    section[data-testid="stSidebar"] .stMarkdown h3,
+    section[data-testid="stSidebar"] label {
+        color: white !important;
+    }
+    
+    /* Headers - Dark text on white background */
+    .main h1 {
+        color: #0f172a !important;
+        font-weight: 800 !important;
+    }
+    
+    .main h2, .main h3 {
+        color: #1e293b !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Buttons - Teal gradient */
     .stButton > button {
         background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%) !important;
         color: white !important;
@@ -87,6 +84,7 @@ st.markdown("""
         font-size: 1.05rem !important;
         transition: all 0.3s ease !important;
         box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5) !important;
+        width: 100% !important;
     }
     
     .stButton > button:hover {
@@ -95,128 +93,182 @@ st.markdown("""
         background: linear-gradient(135deg, #134e4a 0%, #0f766e 100%) !important;
     }
     
-    /* Sidebar - Dark theme */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+    /* Progress Bar */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #0d9488 0%, #14b8a6 100%) !important;
     }
     
-    [data-testid="stSidebar"] .stRadio label,
-    [data-testid="stSidebar"] .stSelectSlider label,
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3 {
-        color: white !important;
+    /* Text Input */
+    .stTextInput > div > div > input {
+        border-radius: 10px !important;
+        border: 2px solid #cbd5e1 !important;
+        padding: 0.75rem !important;
     }
     
-    /* Headers */
-    h1 {
-        color: #0f172a !important;
-        font-weight: 800 !important;
+    .stTextInput > div > div > input:focus {
+        border-color: #0d9488 !important;
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
     }
     
-    h2, h3 {
-        color: #1e293b !important;
+    /* Text Area */
+    .stTextArea > div > div > textarea {
+        border-radius: 12px !important;
+        border: 2px solid #cbd5e1 !important;
+        padding: 1rem !important;
+        font-size: 1.05rem !important;
+    }
+    
+    .stTextArea > div > div > textarea:focus {
+        border-color: #0d9488 !important;
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1) !important;
+    }
+    
+    /* File Uploader */
+    .stFileUploader > div {
+        border: 2px dashed #0d9488 !important;
+        border-radius: 10px !important;
+        background: #f0fdfa !important;
+    }
+    
+    /* Expander */
+    .streamlit-expanderHeader {
+        background-color: #f0fdfa !important;
+        border-radius: 10px !important;
+        border: 1px solid #0d9488 !important;
+    }
+    
+    /* Radio buttons */
+    .stRadio > div {
+        background: rgba(255, 255, 255, 0.1) !important;
+        padding: 0.5rem !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Select Slider */
+    .stSlider > div > div > div {
+        background: #0d9488 !important;
+    }
+    
+    /* Metrics */
+    [data-testid="stMetricValue"] {
+        font-size: 2rem !important;
         font-weight: 700 !important;
+        color: #0d9488 !important;
     }
     
-    /* Header Title */
+    /* Success/Info/Warning/Error messages */
+    .stSuccess {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 1rem !important;
+    }
+    
+    .stInfo {
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 1rem !important;
+    }
+    
+    .stWarning {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 1rem !important;
+    }
+    
+    .stError {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 1rem !important;
+    }
+    
+    /* Spinner */
+    .stSpinner > div {
+        border-top-color: #0d9488 !important;
+    }
+    
+    /* Remove Streamlit branding space */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    
+    /* Reduce padding */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    
+    /* Custom classes for colored boxes */
+    .success-box {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: white !important;
+        padding: 1.5rem !important;
+        border-radius: 15px !important;
+        margin: 0.5rem 0 !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    }
+    
+    .warning-box {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+        color: white !important;
+        padding: 1.5rem !important;
+        border-radius: 15px !important;
+        margin: 0.5rem 0 !important;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3) !important;
+    }
+    
+    .error-box {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        color: white !important;
+        padding: 1.5rem !important;
+        border-radius: 15px !important;
+        margin: 0.5rem 0 !important;
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3) !important;
+    }
+    
+    .info-box {
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
+        color: white !important;
+        padding: 1.5rem !important;
+        border-radius: 15px !important;
+        margin: 0.5rem 0 !important;
+        box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3) !important;
+    }
+    
+    .question-card {
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
+        color: white !important;
+        border-radius: 15px !important;
+        padding: 2rem !important;
+        margin: 1rem 0 !important;
+        box-shadow: 0 15px 40px rgba(13, 148, 136, 0.5) !important;
+    }
+    
+    .card {
+        background: white !important;
+        border-radius: 20px !important;
+        padding: 2rem !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3) !important;
+        margin: 0.5rem 0 !important;
+    }
+    
     .header-title {
         font-size: 3.5rem !important;
         font-weight: 900 !important;
         color: #0f172a !important;
         margin-bottom: 0.5rem !important;
+        text-align: center !important;
     }
     
     .header-subtitle {
         font-size: 1.3rem !important;
         color: #1e293b !important;
         font-weight: 600 !important;
-    }
-    
-    /* Metrics */
-    .metric-card {
-        background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-        border-radius: 15px;
-        padding: 1.5rem;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
-    /* Status Boxes */
-    .success-box {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-    }
-    
-    .warning-box {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-    }
-    
-    .error-box {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-    }
-    
-    .info-box {
-        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
-    }
-    
-    /* Text Area */
-    .stTextArea textarea {
-        border-radius: 12px;
-        border: 2px solid #cbd5e1;
-        padding: 1rem;
-        font-size: 1.05rem;
-    }
-    
-    .stTextArea textarea:focus {
-        border-color: #0d9488;
-        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
-    }
-    
-    /* Text Input */
-    .stTextInput input {
-        border-radius: 10px;
-        border: 2px solid #cbd5e1;
-    }
-    
-    .stTextInput input:focus {
-        border-color: #0d9488;
-        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
-    }
-    
-    /* Expander */
-    .streamlit-expanderHeader {
-        background-color: #f0fdfa;
-        border-radius: 10px;
-    }
-    
-    /* Remove extra padding */
-    .block-container {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        text-align: center !important;
     }
 </style>
-
 """, unsafe_allow_html=True)
 
 
@@ -985,4 +1037,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
