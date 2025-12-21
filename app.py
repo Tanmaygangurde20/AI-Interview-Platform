@@ -29,9 +29,14 @@ st.markdown("""
         --light: #f1f5f9;
     }
     
-    /* Main Container */
-    .main {
+    /* ROOT APP BACKGROUND (FIXED FOR STREAMLIT CLOUD) */
+    [data-testid="stAppViewContainer"] {
         background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    }
+
+    /* Main Container */
+    [data-testid="stAppViewContainer"] .main {
+        background: transparent;
         padding: 1.5rem;
     }
     
@@ -72,7 +77,7 @@ st.markdown("""
     }
     
     /* Buttons - Darker teal for better visibility */
-    .stButton>button {
+    .stButton > button {
         background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%) !important;
         color: white !important;
         border: none !important;
@@ -84,7 +89,7 @@ st.markdown("""
         box-shadow: 0 6px 20px rgba(15, 118, 110, 0.5) !important;
     }
     
-    .stButton>button:hover {
+    .stButton > button:hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 25px rgba(15, 118, 110, 0.7) !important;
         background: linear-gradient(135deg, #134e4a 0%, #0f766e 100%) !important;
@@ -104,11 +109,10 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Headers - Very dark for visibility on white */
+    /* Headers */
     h1 {
         color: #0f172a !important;
         font-weight: 800 !important;
-        text-shadow: none;
     }
     
     h2, h3 {
@@ -116,7 +120,7 @@ st.markdown("""
         font-weight: 700 !important;
     }
     
-    /* Header Title - Dark text */
+    /* Header Title */
     .header-title {
         font-size: 3.5rem !important;
         font-weight: 900 !important;
@@ -139,7 +143,7 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
-    /* Success/Warning/Error Boxes */
+    /* Status Boxes */
     .success-box {
         background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         color: white;
@@ -212,6 +216,7 @@ st.markdown("""
         padding-bottom: 1rem;
     }
 </style>
+
 """, unsafe_allow_html=True)
 
 
@@ -980,3 +985,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
