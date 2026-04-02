@@ -43,7 +43,7 @@ A cutting-edge interview platform that conducts intelligent, personalized techni
 - **Teal/Emerald Theme**: Professional and modern
 - **Responsive Design**: Works on all screen sizes
 - **Live Progress Tracking**: Visual progress bars
-- **Minimal White Space**: Compact, efficient layout
+- **Minimal White Space**: efficient layout
 
 ---
 
